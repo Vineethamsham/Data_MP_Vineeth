@@ -1,0 +1,113 @@
+{
+  "promotion_id": "promo_26560",
+  "title": "Targeted: $150 Rebate with New Internet Line",
+  "category": "Internet",
+  "sub_category": "Rebate",
+  "bill_name": "Internet ID250576",
+  "promotion_code": "26560",
+  "promotion_period": {
+    "start_date": "2025-08-28",
+    "end_date": "TBA"
+  },
+  "requirements": [
+    "New Line Activation",
+    "Specific Rate Plan"
+  ],
+  "payout_type": "Rebate",
+  "payout_value": "$150",
+  "promotion_status": "Active",
+  "eligible_devices": [],
+  "eligible_plans": [],
+  "associated_accessories": [],
+  "source_url": "https://magenta.t-mobile.com/customer-support/promotions/promo-26560",
+  "thumbnail_image": "https://assets.t-mobile.com/promos/internet-rebate.png",
+  "notes": "Applies only to business lines opened after 08/28/2025"
+}
+
+
+
+Swagger
+paths:
+  /api/promotions:
+    get:
+      summary: Retrieve all promotions with filtering support
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: device_id
+          in: query
+          schema:
+            type: string
+        - name: plan_id
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of promotions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Promotion'
+
+components:
+  schemas:
+    Promotion:
+      type: object
+      properties:
+        promotion_id:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        sub_category:
+          type: string
+        bill_name:
+          type: string
+        promotion_code:
+          type: string
+        promotion_period:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date
+            end_date:
+              type: string
+        requirements:
+          type: array
+          items:
+            type: string
+        payout_type:
+          type: string
+        payout_value:
+          type: string
+        promotion_status:
+          type: string
+        eligible_devices:
+          type: array
+          items:
+            type: string
+        eligible_plans:
+          type: array
+          items:
+            type: string
+        associated_accessories:
+          type: array
+          items:
+            type: string
+        source_url:
+          type: string
+        thumbnail_image:
+          type: string
+        notes:
+          type: string
