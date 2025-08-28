@@ -1,0 +1,113 @@
+Yes, great question — you're thinking **exactly in the right direction** for building a truly intelligent Digital AI Assistant.
+
+Here’s the deal:
+
+---
+
+## ✅ What You Can Scrape vs. What Needs to Be Asked
+
+| **Type**                     | **Can Scrape**                          | **Need to Ask for via API / Data Export**                      |
+| ---------------------------- | --------------------------------------- | -------------------------------------------------------------- |
+| Plan Names, Prices, Features | ✅ Yes                                   | ❌ Usually partial, often hardcoded text or split across tabs   |
+| Device-Plan Linking          | ❌ No                                    | ✅ Not always visible on page, often business logic based       |
+| Promo-Plan Mapping           | ❌ No                                    | ✅ Not always exposed in frontend, must be backend relationship |
+| Full Comparison Tables       | ❌ No                                    | ✅ Often generated via JS/UI dynamically                        |
+| Eligibility Logic            | ❌ Partially (e.g., “only for business”) | ✅ Full matrix of rules usually internal/backend                |
+| FAQs (by plan/device/promo)  | ❌ No                                    | ✅ Hidden in collapsible widgets or stored separately           |
+
+---
+
+## 🔎 Examples of "Missing but Crucial" Information You Should Ask For
+
+### 1. 🧩 Plan-Device-Promotion Relationship Mapping
+
+> **Ask For:**
+>
+> * Which devices are eligible for which plans?
+> * Which promotions apply only when user selects a certain plan **and** device combo?
+>
+> **Why:**
+>
+> * The chatbot should respond to queries like:
+>   *“Which plans get me a free Pixel 10 with trade-in?”*
+>   *“If I go with Unlimited Plus, what devices are eligible for rebates?”*
+
+---
+
+### 2. 📊 Full Plan Comparison Matrix
+
+> **Ask For:**
+>
+> * Export or API that provides **side-by-side** plan features like:
+>
+>   * Hotspot limit, Roaming, Priority Data, Price per line (1 to 10)
+>   * Add-on pricing (like international calling)
+>
+> **Why:**
+>
+> * Supports queries like:
+>   *“Compare Business Unlimited vs Magenta Max”*
+>   *“Which plan gives 50GB hotspot and Canada roaming?”*
+
+---
+
+### 3. 📚 FAQs and Contextual Answers
+
+> **Ask For:**
+>
+> * Export of plan-specific FAQs from the website’s help section
+> * Grouped by plan/device/promotion where possible
+>
+> **Why:**
+>
+> * These cover edge cases like:
+>   *“What if I already have a line?”*
+>   *“How long does the rebate take?”*
+>   *“Can I combine this with a student discount?”*
+
+---
+
+### 4. 🧠 Business Rules / Eligibility Logic
+
+> **Ask For:**
+>
+> * Matrix or rule engine logic:
+>
+>   * Plan X only for business users with 5+ lines
+>   * Promo Y only if device is purchased with EIP
+>   * Accessory offer valid only for iPhone models
+>
+> **Why:**
+>
+> * Helps with **guardrails** and reduces hallucination risk
+
+---
+
+## 📨 Sample Message to Ask for These in a Meeting or Email
+
+> Hi Team,
+>
+> As we build the RAG-based AI Assistant for TFB, we’ve identified a few critical pieces of information that aren’t fully accessible through scraping, but are essential for providing accurate and contextual responses to users:
+>
+> ### 🔹 Specific Requests:
+>
+> 1. **Device–Plan–Promotion mappings** (many-to-many eligibility matrix)
+> 2. **Plan comparison data** (side-by-side feature availability, pricing, add-ons)
+> 3. **Structured FAQs** per plan/promo/device
+> 4. **Business rules/eligibility logic** (e.g., which plans are valid for what business sizes, trade-in combinations, virtual device availability)
+>
+> If available via API or internal export (CSV, JSON), we can build a cleaner ingestion pipeline and avoid hallucinations or incorrect responses.
+>
+> We can also provide a structured schema for how this can be shared, or align with your data owners to finalize that. Let us know what’s feasible.
+
+---
+
+Would you like me to draft a **consolidated table or slide** summarizing:
+
+* Device fields
+* Promotion fields
+* Plan fields
+* Relationships (plan-device-promo)
+* Missing info to request
+
+For your meeting? Just say “yes, prepare slide-ready summary” ✅
