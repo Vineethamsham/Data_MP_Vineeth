@@ -1,0 +1,178 @@
+As part of the Digital Avatar RAG system, we are building AI responses for device-related queries. To ensure complete, structured data ingestion, we request access to the following device-related information in a structured API format or export:
+
+🔹 Standard Device Metadata (for mobile/tablets):
+
+Device ID / Unique SKU
+
+Brand, Model Name
+
+Release Date
+
+Screen (Size, Type, Refresh Rate)
+
+Camera Specs (All lenses separately)
+
+Storage Options
+
+OS & Chipset (if available)
+
+Available Colors
+
+Virtual Device Availability
+
+Device Category (IoT, Mobile, Hotspot, etc.)
+
+Associated Plans / Promotions
+
+🔹 Category-specific Metadata (if applicable):
+
+Coverage Devices: Area coverage (sqft), Devices supported, Handoff details
+
+IoT Devices: Use cases, sensors, compatibility, supported plans
+
+Accessories: Type, compatible devices
+
+🔹 Metadata Needed for AI Contextualization:
+
+Short description or marketing copy
+
+Links to device detail pages
+
+Thumbnail image URL
+
+Tags or keywords (business, enterprise, mobile internet, etc.)
+
+We’re happy to work with your team to align the API response format. Let us know if any of this data is unavailable via API so we can plan alternative ingestion methods.
+
+
+{
+  "device_id": "samsung_galaxy_s25_fe",
+  "brand": "Samsung",
+  "model_name": "Galaxy S25 FE",
+  "category": "Mobile Phone",
+  "sub_category": "Smartphone",
+  "release_date": "2025-09-04",
+  "screen": {
+    "size": "6.7\"",
+    "type": "Dynamic AMOLED 2X FHD"
+  },
+  "camera": {
+    "front": "12 MP",
+    "rear": [
+      "50 MP Wide",
+      "12 MP Ultrawide",
+      "8 MP Telephoto"
+    ]
+  },
+  "storage_options": ["128 GB", "256 GB"],
+  "colors_available": ["Black", "Lavender", "Cream", "Graphite"],
+  "os": "Android 14",
+  "chipset": "Exynos 2400",
+  "virtual_device": false,
+  "device_type": "Phone",
+  "available_promotions": [
+    {
+      "promo_id": "promo_5g_tradein_s25",
+      "title": "Free Upgrade with Trade-in"
+    }
+  ],
+  "support_urls": {
+    "overview": "https://magenta.t-mobile.com/devices/samsung-galaxy-s25-fe",
+    "support_page": "https://magenta.t-mobile.com/devices/support/samsung-galaxy-s25-fe"
+  },
+  "thumbnail_image": "https://assets.t-mobile.com/images/s25_fe.png"
+}
+
+paths:
+  /api/devices:
+    get:
+      summary: Get all available devices with metadata
+      parameters:
+        - name: category
+          in: query
+          description: Filter by device category (e.g. Mobile, IoT, Coverage)
+          required: false
+          schema:
+            type: string
+        - name: brand
+          in: query
+          description: Filter by brand name
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of devices with details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+
+components:
+  schemas:
+    Device:
+      type: object
+      properties:
+        device_id:
+          type: string
+        brand:
+          type: string
+        model_name:
+          type: string
+        category:
+          type: string
+        release_date:
+          type: string
+          format: date
+        screen:
+          type: object
+          properties:
+            size:
+              type: string
+            type:
+              type: string
+        camera:
+          type: object
+          properties:
+            front:
+              type: string
+            rear:
+              type: array
+              items:
+                type: string
+        storage_options:
+          type: array
+          items:
+            type: string
+        colors_available:
+          type: array
+          items:
+            type: string
+        os:
+          type: string
+        virtual_device:
+          type: boolean
+        available_promotions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Promotion'
+        support_urls:
+          type: object
+          properties:
+            overview:
+              type: string
+            support_page:
+              type: string
+        thumbnail_image:
+          type: string
+
+    Promotion:
+      type: object
+      properties:
+        promo_id:
+          type: string
+        title:
+          type: string
+
