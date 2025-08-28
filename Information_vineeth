@@ -1,0 +1,131 @@
+To power the Digital AI Assistant with accurate, real-time, and contextual answers, we need structured, backend-level data that goes beyond what’s visible on the website.
+
+The AI assistant must respond to queries across Devices, Plans, and Promotions and also handle comparisons, FAQs, and eligibility rules. For this, we require consistent API responses (or JSON/CSV exports) covering the following:
+
+🔹 Devices
+
+Device ID, Brand, Model, Category
+
+Release Date, Specs (Screen, Camera, Storage, OS, Chipset)
+
+Available Colors, Variants, Virtual Device Flag
+
+Associated Promotions & Eligible Plans
+
+Device Support/IoT/Coverage device metadata
+
+Links (overview page, support page), Images/Thumbnails
+
+🔹 Promotions
+
+Promotion ID, Title, Category, Sub-Category
+
+Start & End Dates, Status (Active/Expired/Future)
+
+Requirements (new line, port-in, trade-in, etc.)
+
+Payout Type & Value (rebate, credit, discount, free months)
+
+Applicable Plans / Devices / Accessories
+
+SOC Group details if relevant
+
+Links, Assets (banners, thumbnails), Notes
+
+🔹 Plans
+
+Plan ID, Name, Price Per Line (1–10 lines)
+
+Features: 5G Data, Hotspot, Roaming, Priority Data, Add-ons
+
+Eligibility Rules (business size, prepaid/postpaid, line limits)
+
+Included vs. Not Eligible Conditions
+
+Associated Devices & Promotions
+
+FAQ Metadata per plan
+
+
+🔹 Cross-Relationships & Additional Needs
+
+Device–Plan–Promotion Mappings (many-to-many eligibility matrix)
+
+Plan Comparison Data (side-by-side features, add-ons, pricing tiers)
+
+Structured FAQs grouped by plan, device, and promotion
+
+Business Rules / Eligibility Logic (minimum lines, trade-in combos, discount stacking)
+
+This information will allow us to:
+
+Avoid misinformation/hallucinations
+
+Provide comparison and eligibility answers instantly
+
+Improve customer experience by delivering contextually correct responses
+
+
+paths:
+  /api/devices:
+    get:
+      summary: Get all available devices
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+
+  /api/promotions:
+    get:
+      summary: Get all promotions
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Promotion'
+
+  /api/plans:
+    get:
+      summary: Get all plans
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+
+components:
+  schemas:
+    Device:
+      type: object
+      properties:
+        device_id: { type: string }
+        brand: { type: string }
+        model_name: { type: string }
+        release_date: { type: string }
+        storage_options: { type: array, items: { type: string } }
+        available_promotions: { type: array, items: { type: string } }
+
+    Promotion:
+      type: object
+      properties:
+        promotion_id: { type: string }
+        title: { type: string }
+        category: { type: string }
+        start_date: { type: string }
+        end_date: { type: string }
+        applicable_plans: { type: array, items: { type: string } }
+        applicable_devices: { type: array, items: { type: string } }
+
+    Plan:
+      type: object
+      properties:
+        plan_id: { type: string }
+        name: { type: string }
+        price_per_line: { type: number }
+        included_features: { type: array, items: { type: string } }
+        eligible_devices: { type: array, items: { type: string } }
+        eligible_promotions: { type: array, items: { type: string } }
